@@ -2,9 +2,12 @@
  * Created by Jerome on 8/13/16.
  */
 var name = undefined;
-// console.log(name);
-function doesNothing(age) {
-console.log(age);
+function greetUser(name){
+    "use strict";
+    if (typeof name === 'string' ){
+        return "Hello, "+name+"!";
+    }
+    return "Hello, world!!";
 }
-// console.log(doesNothing());
-doesNothing();
+console.log(greetUser("bob"));
+console.log(greetUser());
