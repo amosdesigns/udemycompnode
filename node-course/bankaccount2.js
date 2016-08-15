@@ -18,13 +18,14 @@
 
 var accounts = [
     {
-        currentBal: 924846798.98,
+        currentBal: 9798.98,
         name: "jerome"
     }
-
 ];
 
-var bankSevice = {
+
+
+var bankServices = {
         createAccount: function (acc){
             "use strict";
             if (typeof acc ==="object"){
@@ -59,13 +60,22 @@ var bankSevice = {
        return  'Your balance is: $'+n.currentBal+'.'
     }
 }
+console.log(accounts);
+bankServices.createAccount({name:"cindy", currentBal: 27349.67});
 
-console.log(bankSevice.getAccount("jerome"));
-bankSevice.createAccount({name:"cindy", currentBal: 0});
-console.log(bankSevice.getAccount("cindy"));
-console.log(bankSevice.getBalance('cindy'));
-console.log(bankSevice.withdraw('jerome', 100));
-console.log(bankSevice.deposit('cindy', 100));
-console.log(bankSevice.getAccount("cindy"));
-console.log(bankSevice.getAccount("jerome"));
+console.log(bankServices.getAccount("jerome"));
+console.log(bankServices.getAccount("cindy"));
 
+console.log(bankServices.getBalance('cindy'));
+console.log(bankServices.getBalance('jerome'));
+
+
+console.log(bankServices.withdraw('jerome', 561.00));
+console.log(bankServices.withdraw('cindy', 1073.80));
+
+console.log(bankServices.deposit('cindy', 339.50));
+console.log(bankServices.deposit('jerome', 466.87));
+
+console.log(bankServices.getAccount("cindy"));
+console.log(bankServices.getAccount("jerome"));
+console.log(accounts);
