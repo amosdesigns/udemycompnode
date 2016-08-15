@@ -57,7 +57,13 @@ var bankServices = {
     },
     getBalance: function (name) {
         var n = this.getAccount(name);
-       return  'Your balance is: $'+n.currentBal+'.'
+       var message ='++++++++++++++++++++++++++++++++++++++++++'+"\n"+
+           "+++                                    +++"+"\n"+
+           '+++   Your balance is: $'+n.currentBal+'.       +++'+"\n"+
+           "+++                                    +++"+"\n"+
+        '++++++++++++++++++++++++++++++++++++++++++';
+        return message;
+
     }
 }
 console.log(accounts);
