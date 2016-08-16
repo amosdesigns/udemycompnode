@@ -12,9 +12,6 @@
     <exe-path />
     <config-path />
   </component>
-  <component name="PHPCodeSnifferProjectConfiguration">
-    <option name="selectedConfigurationId" value="DEFAULT_INTERPRETER" />
-  </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />

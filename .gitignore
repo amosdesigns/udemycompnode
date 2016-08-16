@@ -19,6 +19,10 @@
 .idea/sqlDataSources.xml
 .idea/dynamic.xml
 .idea/uiDesigner.xml
+.idea/misc.xml
+.idea/**/*
+.idea/*
+
 
 # Gradle:
 .idea/gradle.xml
@@ -54,3 +58,10 @@ fabric.properties
 # modules.xml
 # .idea/misc.xml
 # *.ipr
+
+# node folder
+node-course/password-manager/node_modules
+node-course/password-manager/node_modules/*
+node-course/password-manager/node_modules/**/*
+node-course/password-manager/npm-debug.log
+
