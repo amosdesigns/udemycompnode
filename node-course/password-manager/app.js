@@ -16,13 +16,13 @@ storage.initSync();
 // }]);
  var accounts = storage.getItem('accounts');
 // push on a new account
-accounts.push({
-    username: 'cindy',
-    balance: 2354
-});
-storage.setItem(accounts);
+//accounts.push({
+//    username: 'cindy',
+//    balance: 2354
+//});
+//storage.setItem('accounts', accounts);
 
 //save using setItemSync
 
 
- // console.log('Saved name is: '+ name[0].username);
+console.log(accounts);
