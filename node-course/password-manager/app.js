@@ -6,23 +6,51 @@ console.log('************  starting password manager  ************');
 console.log('*****************************************************');
 
 var storage = require('node-persist');
-//you must first call storage.init or storage.initSync
+
 storage.initSync();
 
-//then start using it
-// storage.setItem('accounts',[{
-//    username: 'Jerome',
-//    balance: 0
-// }]);
- var accounts = storage.getItem('accounts');
-// push on a new account
-//accounts.push({
-//    username: 'cindy',
-//    balance: 2354
-//});
-//storage.setItem('accounts', accounts);
+// account.name facebook
+// account.username User12!
+// account.password Password123!
 
-//save using setItemSync
+function createAccount (account){
+    "use strict";
+    var accounts = storage.getItemSync('accounts');
+
+        if (typeof accounts ==='undefined'){
+            accounts = [];
+        }
+    accounts.push(account);
+    storage.setItemSync('accounts', accounts);
+    return account;
+}
+
+function getAccount (accountName){
+    "use strict";
+    var accounts = storage.getItemSync('accounts'), matchAcc;
+
+    accounts.forEach(function (account){
+        if (account.name === accountName){
+            matchAcc = account;
+        }
+    });
+    return matchAcc;
+}
+/**
+ *
+ * creating an account
+ *
+ *
+ *
+ *
+ *
+ createAccount({
+    name: 'Facebook',
+    username: 'mail@amosdesigns.net',
+    password: 'Password213!'
+});
+ */
+var facebookAccount = getAccount('Facebook');
+console.log(facebookAccount);
 
 
-console.log(accounts);
