@@ -4,34 +4,12 @@
 console.log('*****************************************************');
 console.log('************  starting password manager  ************');
 console.log('*****************************************************');
-
+var crypto = require('crypto-js');
 var storage = require('node-persist');
 
 storage.initSync();
 var argv = require('yargs')
-    .command('create', 'creates the new account', function (yargs){
-        "use strict";
-        yargs.options({
-           accountname: {
-                demand: true,
-                alias: 'n',
-                description: "your account name goes here (twitter, facebook)",
-                type: 'string'
-            },
-            username: {
-                demand: true,
-                alias: 'un',
-                description: "your username or email goes here",
-                type: 'string'
-            },
-            password: {
-                demand: true,
-                alias: 'pass',
-                description: "your password goes here",
-                type: 'string'
-            }
-        }).help("help")
-    }).command('get', 'Get an Exiting account', function (yargs) {
+    .command('create', 'creates the new account', function (yargs) {
         "use strict";
         yargs.options({
             accountname: {
@@ -39,35 +17,114 @@ var argv = require('yargs')
                 alias: 'n',
                 description: "your account name goes here (twitter, facebook)",
                 type: 'string'
+            },
+            username: {
+                demand: true,
+                alias: 'u',
+                description: "your username or email goes here",
+                type: 'string'
+            },
+            password: {
+                demand: true,
+                alias: 'p',
+                description: "your password goes here",
+                type: 'string'
+            },
+            masterPassword: {
+                demand: true,
+                alias: 'm',
+                description: "your master password goes here",
+                type: 'string'
             }
-            }).help("help")
+        })
+             .help("help");
+    })
+    .command('get', 'Get an Exiting account', function (yargs) {
+        "use strict";
+        yargs.options({
+            accountname: {
+                demand: true,
+                alias: 'n',
+                description: "your account name goes here (twitter, facebook)",
+                type: 'string'
+            },
+            masterPassword: {
+                demand: true,
+                alias: 'm',
+                description: "your master password goes here",
+                type: 'string'
+            }
+
+        })
+             .help("help");
     })
     .help("help")
     .argv;
+
 var command = argv._[0];
-// --accountname facebook
-// --username User12!
-// --password Password123!
+///////////////////////////////////
+///////////////////////////////////
 
-//get
-//  --accountname
-
-function createAccount(account) {
+/**
+ * getAccounts
+ * @param masterPassword
+ * @returns {Array}
+ */
+function getAccounts(masterPassword) {
     "use strict";
-    var accounts = storage.getItemSync('accounts');
-
-    if (typeof accounts === 'undefined') {
+    // use getItemSync to fetch accounts
+    var encryptedAccount = storage.getItemSync('accounts'),
         accounts = [];
+    // decrypt
+    if (typeof encryptedAccount !== 'undefined') {
+        var bytes = crypto.AES.decrypt(encryptedAccount, masterPassword);
+        accounts = JSON.parse(bytes.toString(crypto.enc.Utf8));
     }
+    // return accounts array
+    return accounts;
+}
+
+/**
+ * saveAccounts
+ * @param accounts
+ * @param masterPassword
+ * @returns {*}
+ */
+function saveAccounts(accounts, masterPassword) {
+    "use strict";
+
+    var encryptedAccounts = crypto.AES.encrypt(JSON.stringify(accounts), masterPassword);
+    storage.setItemSync('accounts', encryptedAccounts.toString());
+    return accounts;
+}
+
+
+/**
+ * createAccount
+ * @param account
+ * @param masterPassword
+ * @returns {*}
+ */
+function createAccount(account, masterPassword) {
+    "use strict";
+    var accounts = getAccounts(masterPassword);
     accounts.push(account);
-    storage.setItemSync('accounts', accounts);
+    saveAccounts(accounts, masterPassword);
+
     return account;
 }
 
-function getAccount(accountName) {
-    "use strict";
-    var accounts = storage.getItemSync('accounts'), matchAcc;
 
+/**
+ * getAccount
+ * @param accountName
+ * @param masterPassword
+ * @returns {*}
+ */
+function getAccount(accountName, masterPassword) {
+    "use strict";
+    var accounts = getAccounts(masterPassword),
+        matchAcc;
     accounts.forEach(function (account) {
         if (account.name === accountName) {
             matchAcc = account;
@@ -76,20 +133,24 @@ function getAccount(accountName) {
     return matchAcc;
 }
 
-if (command ==='create'){
- var createdAccount = createAccount({
-     name: argv.accountname,
-     username: argv.username,
-     password: argv.password
-});
-    console.log('Account creeated!');
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+if (command === 'create') {
+    var createdAccount = createAccount({
+        name: argv.accountname,
+        username: argv.username,
+        password: argv.password
+    }, argv.masterPassword);
+    console.log('Account created!');
     console.log(createdAccount);
-} else if (command ==='get'){
-    var gotAccount = getAccount(argv.accountname);
-    if (typeof gotAccount ==="undefined"){
+} else if (command === 'get') {
+    var gotAccount = getAccount(argv.accountname, argv.masterPassword);
+    if (typeof gotAccount === "undefined") {
         console.log('ERROR: Account name Not Found!');
     } else {
-        console.log('Account name found!');
+        console.log('Success: Account name found!');
         console.log(gotAccount);
     }
 }
