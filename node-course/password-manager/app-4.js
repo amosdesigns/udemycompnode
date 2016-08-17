@@ -138,30 +138,20 @@ function getAccount(accountName, masterPassword) {
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
 if (command === 'create') {
-    //try
-    try {
-        var createdAccount = createAccount({
-            name: argv.accountname,
-            username: argv.username,
-            password: argv.password
-        }, argv.masterPassword);
-        console.log('Account created!');
-        console.log(createdAccount);
-    } catch (e) {
-        console.log('Unable to create account.');
-    }
+    var createdAccount = createAccount({
+        name: argv.accountname,
+        username: argv.username,
+        password: argv.password
+    }, argv.masterPassword);
+    console.log('Account created!');
+    console.log(createdAccount);
 } else if (command === 'get') {
-    // try
-    try {
-        var gotAccount = getAccount(argv.accountname, argv.masterPassword);
-        if (typeof gotAccount === "undefined") {
-            console.log('ERROR: Account name Not Found!');
-        } else {
-            console.log('Success: Account name found!');
-            console.log(gotAccount);
-        }
-    } catch (e) {
-        console.log('unable to get account.');
+    var gotAccount = getAccount(argv.accountname, argv.masterPassword);
+    if (typeof gotAccount === "undefined") {
+        console.log('ERROR: Account name Not Found!');
+    } else {
+        console.log('Success: Account name found!');
+        console.log(gotAccount);
     }
 }
 
