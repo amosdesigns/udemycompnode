@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Created by Jerome on 8/15/16.
  */
@@ -8,58 +10,54 @@ var crypto = require('crypto-js');
 var storage = require('node-persist');
 
 storage.initSync();
-var argv = require('yargs')
-    .command('create', 'creates the new account', function (yargs) {
-        "use strict";
-        yargs.options({
-            accountname: {
-                demand: true,
-                alias: 'n',
-                description: "your account name goes here (twitter, facebook)",
-                type: 'string'
-            },
-            username: {
-                demand: true,
-                alias: 'u',
-                description: "your username or email goes here",
-                type: 'string'
-            },
-            password: {
-                demand: true,
-                alias: 'p',
-                description: "your password goes here",
-                type: 'string'
-            },
-            masterPassword: {
-                demand: true,
-                alias: 'm',
-                description: "your master password goes here",
-                type: 'string'
-            }
-        })
-             .help("help");
-    })
-    .command('get', 'Get an Exiting account', function (yargs) {
-        "use strict";
-        yargs.options({
-            accountname: {
-                demand: true,
-                alias: 'n',
-                description: "your account name goes here (twitter, facebook)",
-                type: 'string'
-            },
-            masterPassword: {
-                demand: true,
-                alias: 'm',
-                description: "your master password goes here",
-                type: 'string'
-            }
+var argv = require('yargs').command('create', 'creates the new account', function (yargs) {
+    "use strict";
 
-        })
-             .help("help");
-    })
-    .help("help")
-    .argv;
+    yargs.options({
+        accountname: {
+            demand: true,
+            alias: 'n',
+            description: "your account name goes here (twitter, facebook)",
+            type: 'string'
+        },
+        username: {
+            demand: true,
+            alias: 'u',
+            description: "your username or email goes here",
+            type: 'string'
+        },
+        password: {
+            demand: true,
+            alias: 'p',
+            description: "your password goes here",
+            type: 'string'
+        },
+        masterPassword: {
+            demand: true,
+            alias: 'm',
+            description: "your master password goes here",
+            type: 'string'
+        }
+    }).help("help");
+}).command('get', 'Get an Exiting account', function (yargs) {
+    "use strict";
+
+    yargs.options({
+        accountname: {
+            demand: true,
+            alias: 'n',
+            description: "your account name goes here (twitter, facebook)",
+            type: 'string'
+        },
+        masterPassword: {
+            demand: true,
+            alias: 'm',
+            description: "your master password goes here",
+            type: 'string'
+        }
+
+    }).help("help");
+}).help("help").argv;
 
 var command = argv._[0];
 ///////////////////////////////////
@@ -73,6 +71,7 @@ var command = argv._[0];
 function getAccounts(masterPassword) {
     "use strict";
     // use getItemSync to fetch accounts
+
     var encryptedAccount = storage.getItemSync('accounts'),
         accounts = [];
     // decrypt
@@ -92,11 +91,11 @@ function getAccounts(masterPassword) {
  */
 function saveAccounts(accounts, masterPassword) {
     "use strict";
+
     var encryptedAccounts = crypto.AES.encrypt(JSON.stringify(accounts), masterPassword);
     storage.setItemSync('accounts', encryptedAccounts.toString());
     return accounts;
 }
-
 
 /**
  * createAccount
@@ -106,13 +105,13 @@ function saveAccounts(accounts, masterPassword) {
  */
 function createAccount(account, masterPassword) {
     "use strict";
+
     var accounts = getAccounts(masterPassword);
     accounts.push(account);
     saveAccounts(accounts, masterPassword);
 
     return account;
 }
-
 
 /**
  * getAccount
@@ -122,6 +121,7 @@ function createAccount(account, masterPassword) {
  */
 function getAccount(accountName, masterPassword) {
     "use strict";
+
     var accounts = getAccounts(masterPassword),
         matchAcc;
     accounts.forEach(function (account) {
@@ -131,7 +131,6 @@ function getAccount(accountName, masterPassword) {
     });
     return matchAcc;
 }
-
 
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
@@ -164,7 +163,4 @@ if (command === 'create') {
     }
 }
 
-
-
-
-
+//# sourceMappingURL=app-compiled.js.map

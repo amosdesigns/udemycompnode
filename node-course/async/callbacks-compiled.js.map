@@ -1,0 +1,1 @@
+{"version":3,"sources":["callbacks.js"],"names":[],"mappings":";;AAAA;;;AAGA,OAAO,OAAP,GAAiB,YAAY;AACzB,UAAQ,GAAR,CAAY,cAAZ;AACH,CAFD","file":"callbacks-compiled.js","sourcesContent":["/**\n * Created by Jerome on 8/18/16.\n */\nmodule.exports = function () {\n    console.log('Got Weather!');\n}\n"]}

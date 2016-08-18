@@ -59,9 +59,15 @@ fabric.properties
 # .idea/misc.xml
 # *.ipr
 
-# node folder
+# node folders
 node-course/password-manager/node_modules
 node-course/password-manager/node_modules/*
 node-course/password-manager/node_modules/**/*
 node-course/password-manager/npm-debug.log
+node-course/async/node_modules
+node-course/async/node_modules/*
+node-course/async/node_modules/**/*
+node-course/async/npm-debug.log
 
+#### private files for api
+node-course/async/openweather.txt
