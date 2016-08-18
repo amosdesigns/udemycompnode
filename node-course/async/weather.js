@@ -1,11 +1,15 @@
 /**
  * Created by Jerome on 8/18/16.
  */
-const request = require('request'),
+var request = require('request'),
     encodedLocation = "newyork",
     appid = "cdf2110712e9b9aa01f355690923d65d",
     url = 'http://api.openweathermap.org/data/2.5/weather?appid=cdf2110712e9b9aa01f355690923d65d&q=' + encodedLocation + '&units=imperial';
-
+/**
+ * function weather
+ * @param callback
+ * @return string
+ */
 module.exports = function (callback) {
     request({
             url: url,
@@ -15,7 +19,7 @@ module.exports = function (callback) {
             if (error) {
                 callback ('Error: Usable to fetch weather.');
             } else {
-                const cityName = body.name,
+                var cityName = body.name,
                     cityTemp = body.main.temp;
                     callback ( "It's " + cityTemp + ' in ' + cityName + "!" );
             }
