@@ -2,15 +2,17 @@
  * Created by Jerome on 8/18/16.
  */
 var request = require('request'),
-    encodedLocation = "newyork",
     appid = "cdf2110712e9b9aa01f355690923d65d",
-    url = 'http://api.openweathermap.org/data/2.5/weather?appid=cdf2110712e9b9aa01f355690923d65d&q=' + encodedLocation + '&units=imperial';
+    url = 'http://api.openweathermap.org/data/2.5/weather?appid=' + appid + '&q=';
 /**
  * function weather
  * @param callback
  * @return string
  */
-module.exports = function (callback) {
+module.exports = function (location, callback) {
+    var myLoc = encodeURIComponent(location);
+    url += myLoc + '&units=imperial';
+
     request({
             url: url,
             json: true

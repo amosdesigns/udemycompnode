@@ -9,6 +9,7 @@
   "author": "Jerome amos",
   "license": "MIT",
   "dependencies": {
-    "request": "^2.60.0"
+    "request": "^2.60.0",
+    "yargs": "^3.15.0"
   }
 }
