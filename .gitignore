@@ -68,6 +68,10 @@ node-course/async/node_modules
 node-course/async/node_modules/*
 node-course/async/node_modules/**/*
 node-course/async/npm-debug.log
+node-course/web-server/node_modules
+node-course/web-server/node_modules/*
+node-course/web-server/node_modules/**/*
+node-course/web-server/npm-debug.log
 
 #### private files for api
 node-course/async/openweather.txt
